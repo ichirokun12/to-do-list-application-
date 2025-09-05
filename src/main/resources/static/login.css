@@ -1,0 +1,113 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Body */
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0f0f0f;
+  color: #f2f2f2;
+}
+
+/* Container */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Card */
+.login-card {
+  background: #0f0f0f;
+  border: 2px solid #bfbfbf;
+  border-radius: 18px;
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Header */
+.login-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 28px;
+  text-transform: lowercase;
+}
+
+/* Form */
+.login-form .form-group {
+  margin-bottom: 22px;
+  text-align: left;
+}
+
+.login-form label {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: lowercase;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #bfbfbf;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  background: transparent;
+  color: #fff;
+}
+
+.login-form input::placeholder {
+  color: #aaa;
+}
+
+/* Button */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  background: #b388ff;
+  color: #000;
+  transition: 0.3s ease;
+  text-transform: lowercase;
+  margin-top: 8px;
+}
+
+.submit-btn:hover {
+  opacity: 0.9;
+}
+
+/* Register link */
+.register-link {
+  margin-top: 18px;
+  font-size: 14px;
+}
+
+.register-link p {
+  text-transform: lowercase;
+}
+
+.register-link a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}

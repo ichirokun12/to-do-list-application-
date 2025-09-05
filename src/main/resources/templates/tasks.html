@@ -16,6 +16,7 @@
 <!-- Custom Background -->
 <div class="custom-background" id="customBackground"></div>
 <div class="background-overlay" id="backgroundOverlay"></div>
+
 <!-- Interactive Toolbar -->
 <div class="interactive-toolbar">
     <button class="toolbar-btn" onclick="toggleTheme()" id="themeToggle" aria-label="Toggle theme">
@@ -39,6 +40,7 @@
         <span>Export</span>
     </button>
 </div>
+
 <!-- Background Control Panel -->
 <div class="background-panel" id="backgroundPanel">
     <div class="panel-header">
@@ -50,6 +52,7 @@
             <i class="fas fa-times"></i>
         </button>
     </div>
+
     <!-- File Upload Section -->
     <div class="upload-section">
         <div class="upload-area" id="uploadArea">
@@ -60,6 +63,7 @@
             <div class="upload-hint">PNG, JPG, GIF up to 5MB</div>
             <input type="file" id="backgroundFileInput" accept="image/*">
         </div>
+
         <!-- Background Preview -->
         <div class="background-preview" id="backgroundPreview">
             <div class="preview-overlay">
@@ -72,6 +76,7 @@
             </div>
         </div>
     </div>
+
     <!-- Background Controls -->
     <div class="control-group">
         <label class="control-label">Background Opacity</label>
@@ -79,6 +84,7 @@
             <input type="range" class="slider" id="opacitySlider" min="0.3" max="1" step="0.1" value="0.8">
             <span class="slider-value" id="opacityValue">80%</span>
         </div>
+
         <!-- Opacity Presets -->
         <div class="opacity-presets">
             <button class="opacity-preset" data-opacity="0.5" onclick="setOpacityPreset(0.5)">Subtle</button>
@@ -86,6 +92,7 @@
             <button class="opacity-preset" data-opacity="1.0" onclick="setOpacityPreset(1.0)">Full</button>
         </div>
     </div>
+
     <div class="control-group">
         <label class="control-label">Background Position</label>
         <div class="position-grid">
@@ -118,6 +125,7 @@
             </button>
         </div>
     </div>
+
     <div class="control-group">
         <label class="control-label">Background Size</label>
         <div class="position-grid" style="grid-template-columns: repeat(2, 1fr);">
@@ -125,6 +133,7 @@
             <button class="position-btn" data-size="contain">Contain</button>
         </div>
     </div>
+
     <!-- Action Buttons -->
     <div class="action-buttons">
         <button class="action-btn secondary" onclick="resetBackground()">
@@ -135,8 +144,10 @@
         </button>
     </div>
 </div>
+
 <!-- Toast Container -->
 <div class="toast-container" id="toastContainer"></div>
+
 <!-- Context Menu -->
 <div class="context-menu" id="contextMenu">
     <div class="context-menu-item" onclick="editTaskInline()">
@@ -160,6 +171,7 @@
         <span>Delete Task</span>
     </div>
 </div>
+
 <!-- Timer Widget -->
 <div class="timer-widget" id="timerWidget">
     <div class="timer-display" id="timerDisplay">25:00</div>
@@ -178,6 +190,7 @@
         Pomodoro Timer
     </div>
 </div>
+
 <!-- Keyboard Shortcuts Help -->
 <div class="shortcuts-help" id="shortcutsHelp">
     <div class="shortcuts-title">⌨️ Keyboard Shortcuts</div>
@@ -232,15 +245,18 @@
         <button class="timer-btn" onclick="hideShortcuts()">Close</button>
     </div>
 </div>
+
 <div class="container">
     <header class="header">
         <h1>TaskFlow Pro</h1>
         <p>Interactive task management with vivid custom backgrounds and smart features</p>
     </header>
+
     <main class="main-content">
         <section class="form-section">
             <h2>Add New Task</h2>
-            <form action="/tasks" method="post" onsubmit="handleFormSubmit(event)" id="taskForm">
+            <!-- FIXED: Correct Thymeleaf form action -->
+            <form th:action="@{/tasks/form/add}" method="POST" onsubmit="handleFormSubmit(event)" id="taskForm">
                 <div class="form-group">
                     <input type="text" name="task" id="taskInput" placeholder="What needs to be done?" required />
                 </div>
@@ -278,6 +294,7 @@
                 </button>
             </form>
         </section>
+
         <section class="tasks-section">
             <!-- Search and Filter -->
             <div class="search-container">
@@ -285,6 +302,7 @@
                 <input type="text" class="search-box" id="searchBox" placeholder="Search tasks..." />
                 <div class="search-results-info" id="searchResults"></div>
             </div>
+
             <div class="filter-container">
                 <button class="filter-btn active" data-filter="all">
                     <i class="fas fa-list"></i> All Tasks
@@ -299,10 +317,11 @@
                     <i class="fas fa-exclamation"></i> High Priority
                 </button>
             </div>
+
             <!-- Task Statistics -->
             <div class="task-stats">
                 <div class="stat-card" onclick="filterTasks('all')">
-                    <div class="stat-number" id="totalTasks">0</div>
+                    <div class="stat-number" th:text="${tasksCount ?: 0}" id="totalTasks">0</div>
                     <div class="stat-label">Total Tasks</div>
                 </div>
                 <div class="stat-card" onclick="filterTasks('done')">
@@ -318,26 +337,31 @@
                     <div class="stat-label">Completion</div>
                 </div>
             </div>
+
             <div class="section-header">
                 <h2 class="section-title">Your Tasks</h2>
-                <span class="task-count" th:text="${#lists.size(tasks) ?: 0} + ' tasks'" id="visibleTaskCount">0 tasks</span>
+                <span class="task-count" th:text="${tasksCount ?: 0} + ' tasks'" id="visibleTaskCount">0 tasks</span>
             </div>
-            <div th:if="${#lists.isEmpty(tasks)}" class="empty-state" id="emptyState">
+
+            <!-- FIXED: Proper empty state condition -->
+            <div th:if="${tasks == null or #lists.isEmpty(tasks)}" class="empty-state" id="emptyState">
                 <div class="empty-state-icon">✨</div>
                 <h3>No tasks yet</h3>
                 <p>Create your first task to get started on your productivity journey</p>
             </div>
-            <!-- Sortable Task List -->
-            <div class="tasks-list" id="tasksList">
+
+            <!-- FIXED: Sortable Task List with proper Thymeleaf -->
+            <div class="tasks-list" id="tasksList" th:if="${tasks != null and not #lists.isEmpty(tasks)}">
                 <div th:each="task, iterStat : ${tasks}"
                      class="task-card"
                      th:data-task-id="${task.taskId}"
-                     th:data-priority="${task.priority?.toLowerCase()}"
-                     th:data-status="${task.status?.toLowerCase()}"
+                     th:data-priority="${task.priority != null ? task.priority.toLowerCase() : 'medium'}"
+                     th:data-status="${task.status != null ? task.status.toLowerCase() : 'not-done'}"
                      oncontextmenu="showContextMenu(event, this)"
                      ondblclick="editTaskInline(this)">
+
                     <div class="task-header">
-                        <h3 class="task-title" th:text="${task.task}">Task title</h3>
+                        <h3 class="task-title" th:text="${task.task ?: 'Untitled Task'}">Task title</h3>
                         <div class="task-actions">
                             <!-- Timer button -->
                             <button type="button" class="btn btn-timer" onclick="startTaskTimer(this)"
@@ -345,21 +369,23 @@
                                 <i class="fas fa-play"></i>
                                 Timer
                             </button>
+
                             <!-- Done button -->
                             <form th:action="@{'/tasks/markDone/' + ${task.taskId}}" method="post"
                                   style="display: inline-block;"
                                   onsubmit="handleMarkDone(event, this)">
                                 <button type="submit" class="btn btn-done"
-                                        th:disabled="${task.status?.toLowerCase() == 'done'}"
+                                        th:disabled="${task.status != null and task.status.toLowerCase() == 'done'}"
                                         aria-label="Mark task as done">
                                     <i class="fas fa-check"></i>
                                     Done
                                 </button>
                             </form>
+
                             <!-- Delete button -->
                             <form th:action="@{'/tasks/delete/' + ${task.taskId}}" method="post"
                                   style="display: inline-block;"
-                                  onsubmit="handleDelete(event, this)">
+                                  onsubmit="return handleDelete(event, this)">
                                 <button type="submit" class="btn btn-delete"
                                         aria-label="Delete task">
                                     <i class="fas fa-trash"></i>
@@ -368,34 +394,42 @@
                             </form>
                         </div>
                     </div>
+
                     <!-- Progress bar -->
                     <div class="progress-bar">
-                        <div class="progress-fill" th:style="'width: ' + ${task.status?.toLowerCase() == 'done' ? '100' : (task.status?.toLowerCase() == 'partially done' ? '50' : '0')} + '%'"></div>
+                        <div class="progress-fill"
+                             th:style="'width: ' + ${
+                                     (task.status != null and task.status.toLowerCase() == 'done') ? '100' :
+                                     ((task.status != null and task.status.toLowerCase() == 'partially done') ? '50' : '0')
+                                 } + '%'"></div>
                     </div>
+
                     <div class="task-meta">
                         <div class="task-meta-item">
                             <span class="task-meta-label">Status:</span>
-                            <span class="task-meta-value status-badge" th:text="${task.status}">Pending</span>
+                            <span class="task-meta-value status-badge"
+                                  th:text="${task.status ?: 'Not Done'}"
+                                  th:class="'task-meta-value status-badge status-' + ${task.status != null ? task.status.toLowerCase().replace(' ', '-') : 'not-done'}">Pending</span>
                         </div>
                         <div class="task-meta-item">
                             <span class="task-meta-label">Priority:</span>
                             <span class="task-meta-value priority-badge"
-                                  th:text="${task.priority}"
-                                  th:class="'priority-' + ${task.priority?.toLowerCase()}">Normal</span>
+                                  th:text="${task.priority ?: 'Medium'}"
+                                  th:class="'task-meta-value priority-badge priority-' + ${task.priority != null ? task.priority.toLowerCase() : 'medium'}">Normal</span>
                         </div>
-                        <div class="task-meta-item" th:if="${task.startTime != null and !#strings.isEmpty(task.startTime)}">
+                        <div class="task-meta-item" th:if="${task.startTime != null and not #strings.isEmpty(task.startTime)}">
                             <span class="task-meta-label">Start:</span>
                             <span class="task-meta-value" th:text="${task.startTime}">--:--</span>
                         </div>
-                        <div class="task-meta-item" th:if="${task.endTime != null and !#strings.isEmpty(task.endTime)}">
+                        <div class="task-meta-item" th:if="${task.endTime != null and not #strings.isEmpty(task.endTime)}">
                             <span class="task-meta-label">End:</span>
                             <span class="task-meta-value" th:text="${task.endTime}">--:--</span>
                         </div>
-                        <div class="task-meta-item" th:if="${task.startDate != null and !#strings.isEmpty(task.startDate)}">
+                        <div class="task-meta-item" th:if="${task.startDate != null and not #strings.isEmpty(task.startDate)}">
                             <span class="task-meta-label">From:</span>
                             <span class="task-meta-value" th:text="${task.startDate}">--/--/----</span>
                         </div>
-                        <div class="task-meta-item" th:if="${task.endDate != null and !#strings.isEmpty(task.endDate)}">
+                        <div class="task-meta-item" th:if="${task.endDate != null and not #strings.isEmpty(task.endDate)}">
                             <span class="task-meta-label">Until:</span>
                             <span class="task-meta-value" th:text="${task.endDate}">--/--/----</span>
                         </div>
@@ -405,6 +439,7 @@
         </section>
     </main>
 </div>
+
 <script src="tasks.js"></script>
 </body>
 </html>

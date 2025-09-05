@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Task Manager</title>
+  <link rel="stylesheet" href="login.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Custom Background -->
+<div id="customBackground" class="custom-background"></div>
+<div class="background-overlay"></div>
+
+<!-- Interactive Toolbar -->
+<div class="interactive-toolbar">
+  <button id="themeToggle" class="toolbar-btn" onclick="toggleTheme()">
+    <i id="theme-icon" class="fas fa-moon"></i>
+    <span id="theme-text">Dark</span>
+  </button>
+</div>
+
+<!-- Main Container -->
+<div class="login-container">
+  <div class="login-card">
+    <!-- Logo/Header -->
+    <div class="login-header">
+      <i class="fas fa-tasks"></i>
+      <h1>Task Manager</h1>
+      <p>Welcome back! Please sign in to your account.</p>
+    </div>
+
+    <!-- Error Messages -->
+    <div class="message-container">
+      <div th:if="${error}" class="error-message">
+        <i class="fas fa-exclamation-circle"></i>
+        <span th:text="${error}">Invalid username or password.</span>
+      </div>
+
+      <div th:if="${logout}" class="success-message">
+        <i class="fas fa-check-circle"></i>
+        <span th:text="${logout}">You have been logged out successfully.</span>
+      </div>
+
+      <div th:if="${success}" class="success-message">
+        <i class="fas fa-check-circle"></i>
+        <span th:text="${success}">Registration successful! Please sign in with your credentials.</span>
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <form action="/perform_login" method="POST" class="login-form">
+      <div class="form-group">
+        <label for="username">
+          <i class="fas fa-user"></i>
+          Username
+        </label>
+        <input type="text"
+               id="username"
+               name="username"
+               placeholder="Enter your username"
+               required
+               autocomplete="username">
+      </div>
+
+      <div class="form-group">
+        <label for="password">
+          <i class="fas fa-lock"></i>
+          Password
+        </label>
+        <div class="password-input-container">
+          <input type="password"
+                 id="password"
+                 name="password"
+                 placeholder="Enter your password"
+                 required
+                 autocomplete="current-password">
+          <button type="button" class="password-toggle" onclick="togglePassword()">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="form-options">
+        <label class="remember-me">
+          <input type="checkbox" name="remember-me">
+          <span class="checkmark"></span>
+          Remember me
+        </label>
+        <a href="/forgot-password" class="forgot-password">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        <i class="fas fa-sign-in-alt"></i>
+        Sign In
+      </button>
+    </form>
+
+    <!-- Register Link -->
+    <div class="register-link">
+      <p>Don't have an account?
+        <a href="/register">Create one here</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript -->
+</style>
+</body>
+</html>

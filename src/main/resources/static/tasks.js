@@ -990,4 +990,3 @@
         }
         saveBackground(); // Auto-save background settings
     });
-

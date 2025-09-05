@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Task Manager</title>
+  <link rel="stylesheet" href="tasks.css">
+</head>
+<body>
+<!-- Header -->
+<div class="header">
+  <div class="header-buttons">
+    <button id="lightModeBtn" class="header-btn">light mode</button>
+    <button id="tasksBtn" class="header-btn" onclick="location.href='/tasks'">tasks</button>
+    <button id="logoutBtn" class="header-btn" onclick="location.href='/logout'">log out</button>
+  </div>
+</div>
+
+<!-- Main Title -->
+<div class="main-title-container">
+  <h1 class="main-title">Dashboard</h1>
+</div>
+
+<!-- Dashboard Content -->
+<div class="dashboard-content">
+  <div class="dashboard-welcome">
+    <h2>Welcome to Your Dashboard</h2>
+    <p>Organize your work, track your progress, and boost your productivity</p>
+  </div>
+
+  <div class="dashboard-grid">
+    <!-- Create Tasks Card -->
+    <div class="dashboard-card">
+      <div class="card-icon">📋</div>
+      <h3>Create Tasks</h3>
+      <p>Add new tasks and organize your work efficiently</p>
+      <button class="btn-primary" onclick="location.href='/tasks'">Get Started</button>
+    </div>
+
+    <!-- Manage Tasks Card -->
+    <div class="dashboard-card">
+      <div class="card-icon">📊</div>
+      <h3>Manage Tasks</h3>
+      <p>View, edit, and track all your tasks in one place</p>
+      <button class="btn-primary" onclick="location.href='/tasks'">View Tasks</button>
+    </div>
+
+    <!-- Analytics Card -->
+    <div class="dashboard-card">
+      <div class="card-icon">📈</div>
+      <h3>Analytics</h3>
+      <p>Monitor your productivity and completion rates</p>
+      <button class="btn-secondary" disabled>Coming Soon</button>
+    </div>
+
+    <!-- Export Data Card -->
+    <div class="dashboard-card">
+      <div class="card-icon">📁</div>
+      <h3>Export Data</h3>
+      <p>Download your tasks and progress reports</p>
+      <button class="btn-secondary" disabled>Coming Soon</button>
+    </div>
+  </div>
+
+  <!-- Quick Overview -->
+  <div class="quick-overview">
+    <h3>Quick Overview</h3>
+    <p>Start creating and managing tasks to see your activity here</p>
+
+    <div class="stats-container" id="statsContainer">
+      <!-- Stats will be loaded here dynamically -->
+      <div class="stat-card">
+        <div class="stat-number" id="totalTasks">0</div>
+        <div class="stat-label">Total Tasks</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="pendingTasks">0</div>
+        <div class="stat-label">Pending</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="completedTasks">0</div>
+        <div class="stat-label">Completed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="inProgressTasks">0</div>
+        <div class="stat-label">In Progress</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="tasks.js"></script>
+</body>
+</html>

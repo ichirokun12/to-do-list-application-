@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration - Task Manager</title>
+  <link rel="stylesheet" href="register.css">
+</head>
+<body>
+<div class="auth-container">
+  <div class="form-container">
+    <h2 class="form-title">Registration</h2>
+
+    <form id="registerForm" method="POST" action="/auth/register">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">first name</label>
+          <input type="text" id="firstName" name="firstName" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">last name</label>
+          <input type="text" id="lastName" name="lastName" class="form-input" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="username">username</label>
+        <input type="text" id="username" name="username" class="form-input" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">password</label>
+        <input type="password" id="password" name="password" class="form-input" required>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">confirm password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">email</label>
+        <input type="email" id="email" name="email" class="form-input" required>
+      </div>
+
+      <button type="submit" class="btn-primary">Register</button>
+    </form>
+
+    <!-- Error messages -->
+    <div th:if="${error}" class="message error" th:text="${error}"></div>
+  </div>
+</div>
+
+<script src="tasks.js"></script>
+</body>
+</html>
